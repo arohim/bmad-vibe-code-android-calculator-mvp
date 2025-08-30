@@ -14,6 +14,11 @@ import com.bmadcalculator.models.CalculatorModel
  * - Manages displayValue state property (supports both input expression and results)
  * - Provides onNumberClick() function with character limit validation
  * - Enables real-time display updates through state management
+ * 
+ * As per Story 1.2 requirements:
+ * - Provides onOperatorClick() function for handling operator input
+ * - Provides onEqualsClick() function for performing calculations
+ * - Manages expression building and result display states
  */
 class CalculatorViewModel : ViewModel() {
     private val calculatorModel = CalculatorModel()
@@ -34,6 +39,24 @@ class CalculatorViewModel : ViewModel() {
      */
     fun onNumberClick(digit: String) {
         displayValue = calculatorModel.appendNumber(digit)
+    }
+    
+    /**
+     * Handles operator button clicks from the UI.
+     * Updates the display value to show the building expression.
+     * 
+     * @param operator The operator symbol that was clicked (e.g., "+")
+     */
+    fun onOperatorClick(operator: String) {
+        displayValue = calculatorModel.appendOperator(operator)
+    }
+    
+    /**
+     * Handles equals button clicks from the UI.
+     * Performs the calculation and updates the display with the result.
+     */
+    fun onEqualsClick() {
+        displayValue = calculatorModel.calculate()
     }
     
     /**

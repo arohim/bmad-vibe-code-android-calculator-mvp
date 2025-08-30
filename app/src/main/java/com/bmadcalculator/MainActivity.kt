@@ -68,6 +68,8 @@ fun CalculatorApp(
             // Keypad taking the remaining space
             CalculatorKeypad(
                 onNumberClick = viewModel::onNumberClick,
+                onOperatorClick = viewModel::onOperatorClick,
+                onEqualsClick = viewModel::onEqualsClick,
                 modifier = Modifier.weight(1f)
             )
         }

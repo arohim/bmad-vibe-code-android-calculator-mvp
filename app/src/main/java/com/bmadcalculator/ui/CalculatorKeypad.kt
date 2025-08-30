@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 /**
- * CalculatorKeypad composable provides the numeric input interface.
+ * CalculatorKeypad composable provides the numeric input and operation interface.
  * 
  * As per Story 1.1 requirements:
  * - 4x3 grid layout with numbers arranged as specified:
@@ -29,10 +29,17 @@ import androidx.compose.ui.unit.sp
  *   Row 4: 0 (spanning center position)
  * - Immediate display updates when buttons are tapped
  * - Proper sizing and spacing for touch interaction
+ * 
+ * As per Story 1.2 requirements:
+ * - Addition operator ("+") button in row 1
+ * - Equals ("=") button in row 4
+ * - Proper styling to match existing numeric buttons
  */
 @Composable
 fun CalculatorKeypad(
     onNumberClick: (String) -> Unit,
+    onOperatorClick: (String) -> Unit,
+    onEqualsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -41,7 +48,7 @@ fun CalculatorKeypad(
             .padding(8.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // Row 1: 1, 2, 3
+        // Row 1: 1, 2, 3, +
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -60,6 +67,12 @@ fun CalculatorKeypad(
                 text = "3",
                 onClick = { onNumberClick("3") },
                 modifier = Modifier.weight(1f)
+            )
+            CalculatorButton(
+                text = "+",
+                onClick = { onOperatorClick("+") },
+                modifier = Modifier.weight(1f),
+                isOperator = true
             )
         }
         
@@ -107,7 +120,7 @@ fun CalculatorKeypad(
             )
         }
         
-        // Row 4: 0 (spanning center position)
+        // Row 4: 0, =
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -121,6 +134,13 @@ fun CalculatorKeypad(
                 modifier = Modifier.weight(1f)
             )
             
+            CalculatorButton(
+                text = "=",
+                onClick = { onEqualsClick() },
+                modifier = Modifier.weight(1f),
+                isOperator = true
+            )
+            
             // Empty space for right alignment
             androidx.compose.foundation.layout.Spacer(modifier = Modifier.weight(1f))
         }
@@ -128,21 +148,23 @@ fun CalculatorKeypad(
 }
 
 /**
- * Individual calculator button composable with consistent styling
+ * Individual calculator button composable with consistent styling.
+ * Supports different styling for operators vs numbers.
  */
 @Composable
 private fun CalculatorButton(
     text: String,
     onClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isOperator: Boolean = false
 ) {
     Button(
         onClick = onClick,
         modifier = modifier
             .aspectRatio(1f),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Color.LightGray,
-            contentColor = Color.Black
+            containerColor = if (isOperator) MaterialTheme.colorScheme.primary else Color.LightGray,
+            contentColor = if (isOperator) MaterialTheme.colorScheme.onPrimary else Color.Black
         )
     ) {
         Text(
