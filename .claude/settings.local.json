@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(md-tree explode:*)",
+      "Bash(mkdir:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

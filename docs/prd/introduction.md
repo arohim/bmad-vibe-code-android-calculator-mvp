@@ -1,0 +1,3 @@
+# Introduction
+
+This document outlines the requirements for the Minimum Viable Product (MVP) of an Android calculator application. The goal of this MVP is to create a functional, reliable, and user-friendly tool for performing basic mathematical operations and viewing calculation history. This PRD will serve as the single source of truth for the development team, ensuring all features are clearly defined and understood before development begins.
