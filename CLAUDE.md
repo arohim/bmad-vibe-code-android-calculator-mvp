@@ -22,8 +22,8 @@ gradlew.bat assembleDebug
 
 ### Project Structure Commands
 ```bash
-# Generate project structure tree
-md-tree explode
+# Generate project structure tree (not available in this project)
+# Use Glob tool instead: Glob pattern="**/*.kt" to find Kotlin files
 ```
 
 ## Architecture
@@ -100,3 +100,53 @@ When adding new functionality:
 - QA sections document complete end-to-end flow verification
 - Implementation preserves all existing functionality while adding new features
 - Manual testing follows documented example flows (e.g., "2+2=4" flow)
+
+## Testing Commands
+
+### Running Tests
+```bash
+# Run unit tests
+gradlew.bat test
+
+# Run instrumented tests
+gradlew.bat connectedAndroidTest
+```
+
+## Dependencies and Package Structure
+
+### Core Dependencies (from build.gradle.kts)
+- **Jetpack Compose**: UI toolkit with BOM for version alignment
+- **Material Design 3**: `androidx.material3` for theming
+- **Lifecycle & ViewModel**: `lifecycle-viewmodel-compose` for MVVM
+- **Testing**: JUnit, Espresso, and Compose testing libraries
+
+### Package Organization
+```
+com.bmadcalculator/
+├── models/              # Business logic and data classes
+│   ├── CalculatorModel.kt
+│   └── Calculation.kt
+├── viewmodels/          # State management
+│   └── CalculatorViewModel.kt
+├── ui/                  # Compose UI components
+│   ├── CalculatorDisplay.kt
+│   ├── CalculatorKeypad.kt
+│   └── theme/           # Material Design 3 theming
+└── MainActivity.kt      # Single activity entry point
+```
+
+## Story-Driven Implementation Notes
+
+### Working with Stories
+- Each story in `docs/stories/` contains detailed Dev Notes with architectural context
+- Stories reference `docs/architecture/` files for technical specifications
+- Always check previous story QA sections for implementation patterns
+- Maintain backward compatibility when extending existing components
+
+### Next Story Development
+When implementing new calculator operations:
+1. Follow the established pattern from Story 1.2 (Addition Operation)
+2. Extend `CalculatorModel` calculation engine with new operator support
+3. Add operator button to `CalculatorKeypad` with `isOperator = true`
+4. Update expression parsing logic while preserving existing functionality
+5. Ensure QA testing covers complete operation flow (e.g., "5-3=2")
